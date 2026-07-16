@@ -52,5 +52,7 @@ func main() {
 		D = 100  // iota 依然走到3
 		E        // 3
 	)
-
+	k := 1
+	k, l := 2, 2 // 在给 k重新赋值的时候 顺便声明一个变量 l
+	fmt.Println(k, l)
 }
