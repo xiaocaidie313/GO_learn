@@ -3,30 +3,24 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"reflect"
 )
 
 type student struct {
-	Name string `json : "姓名"`
-	Age  string `json : "年龄"`
+	Name string `json:"姓名"`
+	Age  string `json:"年龄"`
 }
 
 func main() {
+	stu := student{Name: "张三", Age: "22"}
 
-	stu := student{"张三", "22"}
 	jsonStr, err := json.Marshal(stu)
-
 	if err != nil {
-		fmt.Println("出错啦")
+		fmt.Println("序列化失败:", err)
 		return
-	} else {
-
-		myStu := student{}
-		json.Unmarshal(jsonStr, &myStu)
-		fmt.Println("类型是= ", reflect.TypeOf(jsonStr))
-		fmt.Println("转化的json是 = %s\n", jsonStr)
-		fmt.Println("myStu = ", myStu)
-
 	}
+	fmt.Println("JSON:", string(jsonStr))
 
+	var myStu student
+	json.Unmarshal(jsonStr, &myStu)
+	fmt.Printf("反序列化: %+v\n", myStu)
 }

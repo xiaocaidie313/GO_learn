@@ -8,24 +8,18 @@ type Person struct {
 }
 
 func newPerson() *Person {
-	p:= person{
-		Name: "Liam",
-		Age:  30,
-	}
+	p := Person{Name: "Liam", Age: 30}
 	return &p
 }
 
 func main() {
 	p := newPerson()
-	fmt.Printf("Name: %s, Age: %d\n", p.Name, p.Age)
-	}
+	fmt.Printf("Person: %+v\n", p)
 
+	// 匿名结构体
 	dog := struct {
 		Breed string
 		Age   int
-	}{
-		Breed: "Labrador",
-		Age:   5,
-	}
-	fmt.Printf("Breed: %s, Age: %d\n", dog.Breed, dog.Age)
+	}{Breed: "Labrador", Age: 5}
+	fmt.Printf("Dog: %+v\n", dog)
 }

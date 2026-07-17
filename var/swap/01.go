@@ -2,10 +2,7 @@ package swap
 
 import "fmt"
 
-// max min 函数
-
 func Compare(a, b int, mode string) int {
-
 	switch mode {
 	case "max":
 		if a > b {
@@ -21,10 +18,12 @@ func Compare(a, b int, mode string) int {
 		return 0
 	}
 }
+
 func main() {
-	a := 1
-	b := 2
-	a, b = b, a // 直接交换 不需要指针
-	fmt.Println(a, b)
-	max(a, b, 2.2)
+	a, b := 1, 2
+	a, b = b, a // 并行赋值交换
+	fmt.Println("交换后:", a, b)
+
+	fmt.Println("max:", Compare(a, b, "max"))
+	fmt.Println("min:", Compare(a, b, "min"))
 }

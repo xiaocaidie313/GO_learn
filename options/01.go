@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type Person struct {
 	Name     string
 	Age      int
@@ -12,45 +14,30 @@ type PersonOption func(*Person)
 
 func NewPerson(options ...PersonOption) Person {
 	p := Person{}
-
 	for _, op := range options {
 		op(&p)
 	}
-
 	if p.Age <= 0 {
 		p.Age = 0
-
 	}
-
 	return p
 }
 
 func WithName(name string) PersonOption {
-	return func(p *Person) {
-		p.Name = name
-	}
+	return func(p *Person) { p.Name = name }
+}
+func WithAge(age int) PersonOption {
+	return func(p *Person) { p.Age = age }
+}
+func WithAddress(address string) PersonOption {
+	return func(p *Person) { p.Address = address }
 }
 
-func WithAge(age int) func(*Person) {
-	return func(p *Person) {
-		p.Age = age
-	}
-}
-
-func WithAddress(address string) func(*Person) {
-	return func(p *Person) {
-		p.Address = address
-	}
-}
-
-func WithSalary(salary float64) func(*Person) {
-	return func(p *Person) {
-		p.Salary = salary
-	}
-}
-
-func WithBirthday(birthday string) PersonOption {
-	return func(p *Person) {
-		p.Birthday = birthday
-	}
+func main() {
+	p := NewPerson(
+		WithName("张三"),
+		WithAge(25),
+		WithAddress("北京"),
+	)
+	fmt.Printf("%+v\n", p)
 }

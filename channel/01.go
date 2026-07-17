@@ -2,25 +2,39 @@ package main
 
 import "fmt"
 
-func main() {
-
+func demoUnbuffered() {
 	c := make(chan int)
-
 	go func() {
-		defer func() {
-			fmt.Println("A defer")
-		}()
-		fmt.Println("A 开始")
-
+		fmt.Println("  [无缓冲] 发送 666")
 		c <- 666
 	}()
-
 	num := <-c
-	// 如果新开的 协程和 main 代码不同步 比如 协程先到 c <- 666 则会在协成发生阻塞 直到 main 的 <-c独处
-	// 同理如果 <-c先到 则会阻塞  等待 c<-的写入
-	fmt.Println("Main 开始, 接受 Num = ", num)
-	defer func() {
-		fmt.Println("Main defer")
-	}()
+	fmt.Println("  [无缓冲] 收到:", num)
+}
 
+func demoBufferedAndSelect() {
+	c := make(chan int, 3)
+	c <- 1
+	c <- 2
+	c <- 3
+	fmt.Println("  [有缓冲] 读出:", <-c, <-c, <-c)
+
+	ch1, ch2 := make(chan string), make(chan string)
+	go func() { ch1 <- "from ch1" }()
+	go func() { ch2 <- "from ch2" }()
+	for i := 0; i < 2; i++ {
+		select {
+		case msg := <-ch1:
+			fmt.Println("  [select]", msg)
+		case msg := <-ch2:
+			fmt.Println("  [select]", msg)
+		}
+	}
+}
+
+func main() {
+	fmt.Println("=== 无缓冲 channel ===")
+	demoUnbuffered()
+	fmt.Println("=== 有缓冲 + select ===")
+	demoBufferedAndSelect()
 }

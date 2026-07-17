@@ -1,21 +1,18 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
-	var map1 map[string]string
-	map1 = make(map[string]string, 10)
-
-	for index, value := range map1 {
-		fmt.Println(index, value)
-	}
-
 	map2 := map[int]string{
-		1: "k",
+		1: "go",
 		2: "c++",
 		3: "python",
 	}
-	delete(map2, 1) // 删除某个键
+	fmt.Println("遍历 map:")
+	for k, v := range map2 {
+		fmt.Printf("  %d → %s\n", k, v)
+	}
+
+	delete(map2, 1)
+	fmt.Println("delete 后:", map2)
 }

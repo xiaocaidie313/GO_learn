@@ -1,8 +1,8 @@
-package enum
+package main
+
+import "fmt"
 
 type Season int
-
-// const 声明了一个常量 则必须 赋值 否则报错
 
 const (
 	Spring Season = iota + 1
@@ -11,16 +11,38 @@ const (
 	Winter
 )
 
+func (s Season) String() string {
+	switch s {
+	case Spring:
+		return "春"
+	case Summer:
+		return "夏"
+	case Autumn:
+		return "秋"
+	case Winter:
+		return "冬"
+	default:
+		return "未知"
+	}
+}
+
 type WeekDay string
 
 const (
-	day1 WeekDay = "Monday"
-	day2 WeekDay = "Tuesday"
-	day3 WeekDay = "Wednesday"
-	day4 WeekDay = "Thursday"
-	day5 WeekDay = "Friday"
-	day6 WeekDay = "Saturday"
-	day7 WeekDay = "Sunday"
+	Monday    WeekDay = "Monday"
+	Tuesday   WeekDay = "Tuesday"
+	Wednesday WeekDay = "Wednesday"
 )
 
-// 为什么能实现枚举效果呢？ ----> 新定义了一个 类型 --> 这个类型 只能取 常量中定义的值 --> 这样就实现了枚举效果
+func main() {
+	// iota 枚举
+	var s Season = Summer
+	fmt.Println("Season:", s, "→", s.String())
+
+	// 字符串枚举
+	day := Monday
+	fmt.Println("WeekDay:", day)
+
+	// 枚举类型限制：只能赋已定义的常量值
+	// s = 99  // 编译可通过但不符合枚举语义，应用自定义类型约束
+}
