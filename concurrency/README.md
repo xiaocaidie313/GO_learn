@@ -67,6 +67,7 @@ mu.Lock(); defer mu.Unlock()
 
 ## 注意
 
+- 各 `.go` 文件中保留了学习注释，阻塞/报错示例以注释形式保留
 - 主 goroutine 退出 → 整个程序退出，其他协程也会被终止
 - 无缓冲 channel 发送/接收必须同时就绪，否则会阻塞
 - nil channel 在 select 中会被忽略；单独读写 nil channel 会永久阻塞
